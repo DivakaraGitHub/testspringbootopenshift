@@ -110,7 +110,7 @@
 
     </dependencies>
 
-    <build>
+   <!--  <build>
         <defaultGoal>spring-boot:run</defaultGoal>
 
         <plugins>
@@ -152,30 +152,69 @@
 
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
+ -->
+   <profile>
             <id>openshift</id>
+            <activation>
+                <property>
+                    <name>openshift</name>
+                </property>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <fabric8.mode>openshift</fabric8.mode>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                </dependency>
+            </dependencies>
+
             <build>
                 <plugins>
 
                     <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.redhat-fuse</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${fuse.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>${fabric8.maven.plugin.version}</version>
+                        <version>${fabric8-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>resource</goal>
                                     <goal>build</goal>
+                                    <goal>deploy</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
+		
     </profiles>
 
     <pluginRepositories>
