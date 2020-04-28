@@ -31,6 +31,16 @@ objects:
               ports:
                 - containerPort: 8084
                   protocol: TCP
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - "test-springboot-jenkins-openshift"
+            from:
+              kind: ImageStreamTag
+              name: test-springboot-jenkins-openshift:latest
+          type: ImageChange
+        - type: ConfigChange
   - apiVersion: v1
     kind: Service
     metadata:
