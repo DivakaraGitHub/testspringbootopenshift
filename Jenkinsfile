@@ -10,7 +10,7 @@ pipeline {
         STAGE_TAG = "promoteToQA"
         DEV_PROJECT = "fuse-on-ocp-18e9"
         STAGE_PROJECT = "stage"
-        TEMPLATE_NAME = "testspringbootopenshift"
+        TEMPLATE_NAME = "testspringbootopenshift-master"
         ARTIFACT_FOLDER = "./target"
 		BASE_IMAGE = "fuse7-java-openshift:1.3"
 		BUILD_TAG = "latest"
