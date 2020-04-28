@@ -33,3 +33,12 @@ objects:
        name: "test-springboot-jenkins-openshift"
     spec:
       replicas: 1
+      selector:
+        app: "test-springboot-jenkins-openshift"
+        deploymentconfig: "test-springboot-jenkins-openshift"
+      strategy:
+        type: Recreate
+      template:
+       metadata:
+            app: "test-springboot-jenkins-openshift"
+            deploymentconfig: "test-springboot-jenkins-openshift"
