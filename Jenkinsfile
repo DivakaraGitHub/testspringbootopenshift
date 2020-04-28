@@ -76,7 +76,7 @@ pipeline {
 				script {
 				  def dc = openshift.selector("dc/${APPLICATION_NAME}").object()
 
-				openshift.set("triggers", "dc/${APPLICATION_NAME}", "--from-image=${APPLICATION_NAME}:latest", "-c ${dc.spec.template.spec.containers[0].name}", "--manual")    
+				openshift.set("triggers", "dc/${TEMPLATE_NAME}", "--from-image=${TEMPLATE_NAME}:latest", "-c ${dc.spec.template.spec.containers[0].name}", "--manual")    
     
 				openshift.selector("dc", application).rollout().latest()    
 				openshift.selector("dc", application).rollout().status()
