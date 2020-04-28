@@ -1,36 +1,17 @@
-kind: "Template"
-apiVersion: "v1"
+apiVersion: v1
+kind: Template
 metadata:
   name: "test-springboot-jenkins-openshift"
+  annotations:
+    openshift.io/display-name: JenkinsOpenshift
+    iconClass: fa fa-code
 objects:
-  - kind: "Service" 
-    apiVersion: "v1"
+  - apiVersion: v1
+    kind: DeploymentConfig
     metadata:
-      app: "test-springboot-jenkins-openshift"
+      labels:
+        app: "test-springboot-jenkins-openshift"
       name: "test-springboot-jenkins-openshift"
-    spec:
-      ports:
-        - name: 8090-tcp
-          port: 8090
-          protocol: TCP
-          targetPort: 8090
-      selector:
-        name: "test-springboot-jenkins-openshift"
-        deploymentconfig: "test-springboot-jenkins-openshift"
-  - kind: "Route" 
-    apiVersion: "v1"
-    metadata:
-      app: "test-springboot-jenkins-openshift"
-      name: "test-springboot-jenkins-openshift"
-    spec:
-      to:
-        kind: Service
-        name: "test-springboot-jenkins-openshift"
-  - kind: DeploymentConfig
-    apiVersion: v1
-    metadata:
-       app: "test-springboot-jenkins-openshift"
-       name: "test-springboot-jenkins-openshift"
     spec:
       replicas: 1
       selector:
@@ -39,13 +20,13 @@ objects:
       strategy:
         type: Recreate
       template:
-       metadata:
-            labels:
+        metadata:
+          labels:
             app: "test-springboot-jenkins-openshift"
             deploymentconfig: "test-springboot-jenkins-openshift"
-       spec:
+        spec:
           containers:
-            - image: "test-springboot-jenkins-openshift":latest
+            - image: test-springboot-jenkins-openshift:latest
               name: "test-springboot-jenkins-openshift"
               livenessProbe:
                 failureThreshold: 3
@@ -98,6 +79,31 @@ objects:
               - "test-springboot-jenkins-openshift"
             from:
               kind: ImageStreamTag
-              name: "test-springboot-jenkins-openshift":latest
+              name: test-springboot-jenkins-openshift:latest
           type: ImageChange
         - type: ConfigChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: "test-springboot-jenkins-openshift"
+      name: "test-springboot-jenkins-openshift"
+    spec:
+      ports:
+        - name: 8090-tcp
+          port: 8090
+          protocol: TCP
+          targetPort: 8090
+      selector:
+        app: "test-springboot-jenkins-openshift"
+        deploymentconfig: "test-springboot-jenkins-openshift"
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      labels:
+        app: "test-springboot-jenkins-openshift"
+      name: "test-springboot-jenkins-openshift"
+    spec:
+      to:
+        kind: Service
+        name: "test-springboot-jenkins-openshift"
