@@ -113,13 +113,13 @@
 
     </dependencies>
 
-   <profiles>
-       <profile>
+     <profile>
             <id>openshift</id>
             <activation>
                 <property>
                     <name>openshift</name>
                 </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
 
             <properties>
@@ -141,8 +141,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>${maven-compiler-plugin.version}</version>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -157,10 +157,10 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>org.jboss.redhat-fuse</groupId>
+                   <plugin>
+                        <groupId>io.fabric8</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>${fuse.version}</version>
+                        <version>${fabric8-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
