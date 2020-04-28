@@ -112,7 +112,7 @@
         </dependency>
 
     </dependencies>
-
+ <profiles>
      <profile>
             <id>openshift</id>
             <activation>
