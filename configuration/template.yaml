@@ -11,9 +11,17 @@ objects:
     spec:
       ports:
         - name: 8084-tcp
-          port: 8084
+          port: 8090
           protocol: TCP
-          targetPort: 8084
+          targetPort: 8090
       selector:
         name: "test-springboot-jenkins-openshift"
-        deploymentconfig: "test-springboot-jenkins-openshift"
+    - kind: Route
+    metadata:
+      labels:
+        app: "test-springboot-jenkins-openshift"
+      name: "test-springboot-jenkins-openshift"
+    spec:
+      to:
+        kind: Service
+        name: "test-springboot-jenkins-openshift"
