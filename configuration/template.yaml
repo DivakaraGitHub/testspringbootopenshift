@@ -6,14 +6,14 @@ objects:
   - kind: "Service" 
     apiVersion: "v1"
     metadata:
-		app: "test-springboot-jenkins-openshift"
+      app: "test-springboot-jenkins-openshift"
       name: "test-springboot-jenkins-openshift"
     spec:
       ports:
         - name: 8084-tcp
           port: 8084
-		  protocol: TCP
+          protocol: TCP
           targetPort: 8084
       selector:
         name: "test-springboot-jenkins-openshift"
-		deploymentconfig: "test-springboot-jenkins-openshift"
+        deploymentconfig: "test-springboot-jenkins-openshift"
