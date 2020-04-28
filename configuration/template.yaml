@@ -26,11 +26,11 @@ objects:
       to:
         kind: Service
         name: "test-springboot-jenkins-openshift"
-   - kind: DeploymentConfig
+  - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-        app: "test-springboot-jenkins-openshift"
-      name: "test-springboot-jenkins-openshift"
+       app: "test-springboot-jenkins-openshift"
+       name: "test-springboot-jenkins-openshift"
     spec:
       replicas: 1
       selector:
