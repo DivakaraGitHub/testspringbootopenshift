@@ -8,7 +8,7 @@
 
   <!-- Define a traditional camel context here -->
   <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-<restConfiguration bindingMode="json" component="servlet" port="8778"/>
+<restConfiguration bindingMode="json" component="servlet" />
     <rest path="/say">
     <get uri="/hello" consumes="application/json">
       <to uri="direct:hello"/>
