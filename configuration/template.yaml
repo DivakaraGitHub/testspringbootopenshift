@@ -1,46 +1,34 @@
-apiVersion: v1
-kind: Template
+kind: "Template"
+apiVersion: "v1"
 metadata:
   name: "test-springboot-jenkins-openshift"
-  annotations:
-    openshift.io/display-name: Jenkins-Openshift
-    iconClass: fa fa-code
 objects:
-  - apiVersion: v1
-    kind: ImageStream
+  - kind: "Service" 
+    apiVersion: "v1"
     metadata:
-      labels:
-        app: "test-springboot-jenkins-openshift"
-      name: "test-springboot-jenkins-openshift"
-  - apiVersion: v1
-    kind: BuildConfig
-    metadata:
-      labels:
-        app: "test-springboot-jenkins-openshift"
+      app: "test-springboot-jenkins-openshift"
       name: "test-springboot-jenkins-openshift"
     spec:
-      triggers:
-        - type: "ConfigChange"
-      output:
-        to:
-          kind: ImageStreamTag
-          name: "test-springboot-jenkins-openshift":latest
-      source:
-        git:
-          uri: "https://github.com/DivakaraGitHub/testspringbootopenshift.git"
-          ref: "master"
-        type: Git
-      strategy:
-        sourceStrategy:
-          from:
-            kind: ImageStreamTag
-            name: "fuse7-java-openshift:1.3"
-            namespace: openshift
-        type: Source
-  - apiVersion: v1
-    kind: DeploymentConfig
+      ports:
+        - name: 8090-tcp
+          port: 8090
+          protocol: TCP
+          targetPort: 8090
+      selector:
+        name: "test-springboot-jenkins-openshift"
+        deploymentconfig: "test-springboot-jenkins-openshift"
+  - kind: "Route" 
+    apiVersion: "v1"
     metadata:
-      labels:
+      app: "test-springboot-jenkins-openshift"
+      name: "test-springboot-jenkins-openshift"
+    spec:
+      to:
+        kind: Service
+        name: "test-springboot-jenkins-openshift"
+   - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
         app: "test-springboot-jenkins-openshift"
       name: "test-springboot-jenkins-openshift"
     spec:
@@ -113,30 +101,3 @@ objects:
               name: "test-springboot-jenkins-openshift":latest
           type: ImageChange
         - type: ConfigChange
-  - apiVersion: v1
-    kind: Service
-    metadata:
-      labels:
-        app: "test-springboot-jenkins-openshift"
-      name: "test-springboot-jenkins-openshift"
-    spec:
-      ports:
-        - name: 8090-tcp
-          port: 8090
-          protocol: TCP
-          targetPort: 8090
-      selector:
-        app: "test-springboot-jenkins-openshift"
-        deploymentconfig: "test-springboot-jenkins-openshift"
-  - apiVersion: v1
-    kind: Route
-    metadata:
-      labels:
-        app: "test-springboot-jenkins-openshift"
-      name: "test-springboot-jenkins-openshift"
-    spec:
-      to:
-        kind: Service
-        name: "test-springboot-jenkins-openshift"
-
-
