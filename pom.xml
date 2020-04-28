@@ -157,15 +157,53 @@
     </build>
 
    <profiles>
-        <profile>
+       <profile>
             <id>openshift</id>
+            <activation>
+                <property>
+                    <name>openshift</name>
+                </property>
+            </activation>
+
+            <properties>
+                <fabric8.mode>openshift</fabric8.mode>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                </dependency>
+            </dependencies>
+
             <build>
                 <plugins>
 
                     <plugin>
-                        <groupId>io.fabric8</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.redhat-fuse</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${fuse.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.redhat-fuse</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>${fabric8.maven.plugin.version}</version>
+                        <version>${fuse.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -176,7 +214,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
