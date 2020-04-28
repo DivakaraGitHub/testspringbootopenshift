@@ -1,4 +1,4 @@
-FROM jboss_openjdk18-rhel7:1.1
+FROM nginx:mainline-alpine
 ENV FUSE_JAVA_IMAGE_NAME="fuse7/fuse-java-openshift" \
     FUSE_JAVA_IMAGE_VERSION="1.3" \
     JOLOKIA_VERSION="1.5.0.redhat-1" \
