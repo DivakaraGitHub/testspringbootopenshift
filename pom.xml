@@ -172,7 +172,7 @@
         </plugins>
     </build>
 	
- <profiles>
+ <profiles>>
      <profile>
             <id>openshift</id>
             <build>
